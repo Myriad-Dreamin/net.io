@@ -1,27 +1,43 @@
-# NetIo
+# net.io
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.2.10.
+Visual Network Model
 
-## Development server
+## Use Case
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+### Computer Network Visualization
 
-## Code scaffolding
+### Control Flow Visualization
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+### User Defined Trace Flow
 
-## Build
+## Concept
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+There are two layer in the architecture of the network graph model. The rendering layer (view of MVVM) handles HTML elements and control them according to the requirement of controller layer. The (network node) controller layer (view model of MVVM) provides the data to the rendering layer and node-by-node data operation api for user.
 
-## Running unit tests
+## Rendering Layer
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### NodeComponent
 
-## Running end-to-end tests
+The `NodeComponent` renders the nodes of the controller layer as graphical nodes in the page.
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+### EdgeComponent
 
-## Further help
+The `EdgeComponent` renders the node relationships of the controller layer as graphical paths in the page.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+### FlowComponent
+
+The `FlowComponent` visualizes node events from one node to another node along the graphical path rendered by the `EdgeComponent`.
+
+### GraphTopologyEngine
+
+With the number of node and edge components increased, the topology of the graph becomes incomprehensible. The `NodeComponent` and `EdgeComponent` never decide how to make visualization comprehensible. Instead, the `GraphTopologyEngine` tries its best to render node and edge combinations.
+
+## Controller Layer
+
+### NetworkNode
+
+The `NetworkNode` provides the inheritable method `route` to make packet routing decision (`NetworkFlow`): consume or forward packets with the help of `NetworkEnvironment`.
+
+### NetworkFlow
+
+The `NetworkFlow` considers `NetworkNode` communication abstraction, in short passing data to `NetworkNode` and the rendering layer.
